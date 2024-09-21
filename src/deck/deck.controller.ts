@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { DeckService } from './deck.service';
 import { Deck } from './schemas/deck.schema';
 import { createDeckDto } from './dto/create-deck.dto';
@@ -7,7 +7,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
-import { CACHE_MANAGER, CacheInterceptor } from '@nestjs/cache-manager';
+import { ImportDeckDto } from './dto/import-deck.dto';
+import { validateCommanderDeck } from './validators/commander-validator';
+import { CACHE_MANAGER, CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
 @Controller('deck')
@@ -73,8 +75,29 @@ constructor(
    /////////////////////////////////////////////////////////////////////
 
 
-   // falta o topico 5 ("import" json)
+   @Post('import')
+   async importDeck(
+    @Body() 
+    importDeckDto: ImportDeckDto,
+    @Req()
+    req: any,  
+  ) {
 
+     const isValid = validateCommanderDeck(importDeckDto);
+     if (!isValid) {
+       throw new BadRequestException('O baralho não segue as regras do formato Commander.');
+     }
+ 
+     const userEmail = req.user.email;
+
+     const deckImport = await this.deckService.create(importDeckDto);
+  
+     const cacheKey = `myDecks_${userEmail}`;
+
+     await this.cacheManager.del(cacheKey);
+     
+     return deckImport;
+   }
 
    //////////////////////////////////////////////////////////////////
 
@@ -102,6 +125,8 @@ constructor(
      await this.cacheManager.del(cacheKey);
 
      return newDeckManual;
+ 
+    // return this.deckService.create(deck)
   }
 
   @Get(':id')
@@ -131,6 +156,8 @@ constructor(
     await this.cacheManager.del(cacheKey);
 
     return updateDeck;
+
+    // return this.deckService.updateById(id, deck);
   }
 
   @Delete('/deleteDeck/:id')
@@ -151,6 +178,7 @@ constructor(
     await this.cacheManager.del(cacheKey);
 
     return deleteDeck;
+    //return this.deckService.deleteById(id);
   }
 
 
