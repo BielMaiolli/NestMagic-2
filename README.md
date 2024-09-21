@@ -30,11 +30,15 @@ E por fim para rodar o projeto:
 
 Para realizar os testes:
 
+Sobre Cache:
 - npx autocannon -c 50 -d 30 -m GET http://localhost:3000/deck/myDecks --title "Sem Cache" --renderStatusCodes
 
 - npx autocannon -c 50 -d 30 -m GET http://localhost:3000/deck/myDecks --title "Com Cache" --renderStatusCodes
 
 Obs: Para realizar o teste sem cache comente na controller "@UseInterceptors(CacheInterceptor)" 
+
+Sobre Cluster:
+autocannon -c 100 -d 20 http://localhost:3000
 
 Referencias para realização:
 
