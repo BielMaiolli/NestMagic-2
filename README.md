@@ -28,6 +28,14 @@ E por fim para rodar o projeto:
 
 - npm run start:dev
 
+Para realizar os testes:
+
+- npx autocannon -c 50 -d 30 -m GET http://localhost:3000/deck/myDecks --title "Sem Cache" --renderStatusCodes
+
+- npx autocannon -c 50 -d 30 -m GET http://localhost:3000/deck/myDecks --title "Com Cache" --renderStatusCodes
+
+Obs: Para realizar o teste sem cache comente na controller "@UseInterceptors(CacheInterceptor)" 
+
 Referencias para realização:
 
 https://www.youtube.com/watch?v=4oLUddZVL80&list=PLdAEGQHOerPAMLdJim5Peryj6_2Q-477Z
