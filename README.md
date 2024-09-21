@@ -2,7 +2,7 @@ Comandos para essa aplicação:
 
 npm i -g @nestjs/cli
 
-criar o '.env' (colocar o link do banco de dados DB_URL="link" e o JWT_SECRET e o JWT_EXPIRES
+criar o '.env' (colocar o link do banco de dados DB_URL="link" e o JWT_SECRET e o JWT_EXPIRES)
 
 npm i mongoose @nestjs/mongoose @nestjs/config --save
 
