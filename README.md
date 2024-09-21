@@ -20,6 +20,10 @@ npm i passport-jwt --save
 
 npm install @nestjs/cache-manager cache-manager
 
+npm i wrk
+
+npm i cluster
+
 E por fim para rodar o projeto:
 
 npm run start:dev
