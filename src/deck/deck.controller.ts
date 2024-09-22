@@ -76,6 +76,7 @@ constructor(
 
 
    @Post('import')
+   @UseGuards(AuthGuard())
    async importDeck(
     @Body() 
     importDeckDto: ImportDeckDto,
