@@ -7,9 +7,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+    rootPath: join(__dirname, '..', 'public'), // pasta onde seus arquivos HTML estão
+    }),
     CacheModule.register({
       ttl: 10,
       max: 100,
