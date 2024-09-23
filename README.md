@@ -38,7 +38,7 @@ Sobre Cache:
 Obs: Para realizar o teste sem cache comente na controller "@UseInterceptors(CacheInterceptor)" 
 
 Sobre Cluster:
-autocannon -c 100 -d 20 http://localhost:3000
+- autocannon -c 100 -d 20 http://localhost:3000
 
 Referencias para realização:
 
