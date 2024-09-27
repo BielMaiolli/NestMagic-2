@@ -24,6 +24,8 @@ Comandos para essa aplicação:
 
 - npm i cluster
 
+- npm install @nestjs/serve-static
+
 E por fim para rodar o projeto:
 
 - npm run start:dev
