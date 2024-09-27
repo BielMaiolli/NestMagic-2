@@ -74,15 +74,12 @@ export class DeckService {
     return deck.save();
    }
 
-   ////////////////////////////////////////////////////////////////////////////////
 
 
     async findDecksByEmail(userEmail: string): Promise<Deck[]>{
       return this.deckModel.find({ userEmail });
     }
 
-
-   ////////////////////////////////////////////////////////////////////////////////
 
 
     async findAll(): Promise<Deck[]> {

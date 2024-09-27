@@ -13,7 +13,7 @@ import { join } from 'path';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', 'public'), // pasta onde seus arquivos HTML estão
+      rootPath: join(__dirname, '..', 'public'), 
     }),
     CacheModule.register({
       ttl: 10,

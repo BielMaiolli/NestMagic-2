@@ -1,0 +1,57 @@
+body {
+    background-color: #121212; /* Fundo escuro para destacar os cards */
+    color: #f0f0f0; /* Cor de texto mais suave */
+    font-family: 'Cinzel', serif; /* Fonte com estilo mais mágico */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 40px;
+    background: radial-gradient(circle, #1a1a2e, #16213e); /* Fundo celestial com degradê */
+}
+
+.card-item {
+    background: linear-gradient(145deg, #e0eafc, #cfdef3); /* Fundo com tom celestial claro */
+    border: 2px solid #8a9ad6; /* Bordas com tom celestial azul */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3), 0 0 15px rgba(138, 154, 214, 0.5); /* Brilho suave ao redor */
+    padding: 20px;
+    text-align: center;
+    width: calc(20% - 20px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Cinzel', serif;
+    color: #333;
+}
+
+.card-item:hover {
+    transform: scale(1.1); /* Aumenta ao passar o mouse */
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(138, 154, 214, 0.7); /* Brilho mais forte ao passar o mouse */
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Suaviza as bordas da imagem */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); /* Brilho suave ao redor da imagem */
+}
+
+h2 {
+    color: #e0eafc;
+    font-family: 'Cinzel Decorative', serif; /* Título mais ornamental */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efeito de brilho no título */
+}
+
+@media (max-width: 768px) {
+    .card-item {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .card-item {
+        width: calc(100% - 20px);
+    }
+}
