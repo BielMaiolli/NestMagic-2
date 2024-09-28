@@ -35,6 +35,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+                console.log('Signup Response:', data);
+
+                if (response.ok) {
+                    alert('Signup bem-sucedido! Agora faça login.');
+                } else {
+                    alert('Erro no signup: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+            }
+        });
+    }
+
+
+
     const loadDecksButton = document.getElementById('loadDecksButton');
     const deckList = document.getElementById('deck-list');
     
