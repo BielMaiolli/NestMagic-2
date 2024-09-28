@@ -32,26 +32,38 @@ constructor(
 
   
    @Post('newDeckWithCommander')
-   @UseGuards(AuthGuard())
-   async createDeckWithCommander(
-       @Query('commanderName') commanderName: string,
-       @Query('deckName') deckName: string,
-       @Req() req: any,
-   ): Promise<Deck> {
-       const userEmail = req.user.email;
+@UseGuards(AuthGuard())
+async createDeckWithCommander(
+    @Query('commanderName') commanderName: string,
+    @Query('deckName') deckName: string,
+    @Req() req: any,
+): Promise<Deck> {
+    const userEmail = req.user.email;
 
-       const newDeck = await this.deckService.createDeckWithCommander(commanderName, deckName, userEmail);
+   
+    console.log('Received parameters:', { commanderName, deckName });
 
-       const cacheKey = `myDecks_${userEmail}`;
-       
-       await this.cacheManager.del(cacheKey);
+    
+    if (!commanderName || !deckName) {
+        throw new BadRequestException('Comandante e nome do deck são obrigatórios.');
+    }
 
-       return newDeck;
-   }
+    
+    if (typeof commanderName !== 'string' || typeof deckName !== 'string') {
+        throw new BadRequestException('Comandante e nome do deck devem ser strings.');
+    }
 
-   //////////////////////////////////////////////////////////////////////
+    try {
+        const newDeck = await this.deckService.createDeckWithCommander(commanderName, deckName, userEmail);
+        const cacheKey = `myDecks_${userEmail}`;
+        await this.cacheManager.del(cacheKey);
+        return newDeck;
+    } catch (error) {
+        console.error('Error creating deck:', error);
+        throw new BadRequestException('Erro ao criar o deck.');
+    }
+}
 
-  
    @Get('myDecks')
    @UseGuards(AuthGuard())
    async getMyDecks(@Req() req: any) {
@@ -70,10 +82,6 @@ constructor(
 
      return decks;
    }
-
-
-   /////////////////////////////////////////////////////////////////////
-
 
    @Post('import')
    @UseGuards(AuthGuard())
@@ -100,7 +108,6 @@ constructor(
      return deckImport;
    }
 
-   //////////////////////////////////////////////////////////////////
 
   @Get('allDecks')
   @Roles(Role.ADMIN)
@@ -127,7 +134,6 @@ constructor(
 
      return newDeckManual;
  
-    // return this.deckService.create(deck)
   }
 
   @Get(':id')
@@ -157,8 +163,6 @@ constructor(
     await this.cacheManager.del(cacheKey);
 
     return updateDeck;
-
-    // return this.deckService.updateById(id, deck);
   }
 
   @Delete('/deleteDeck/:id')
@@ -179,7 +183,6 @@ constructor(
     await this.cacheManager.del(cacheKey);
 
     return deleteDeck;
-    //return this.deckService.deleteById(id);
   }
 
 
