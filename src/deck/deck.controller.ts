@@ -166,7 +166,7 @@ async createDeckWithCommander(
   }
 
   @Delete('/deleteDeck/:id')
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER, Role.MODERADOR)
   @UseGuards(AuthGuard(), RolesGuard)
   async deleteById(
     @Param('id')
